@@ -1,0 +1,3 @@
+notification_id,equipment_id,notification_type,issue_description,priority,reported_date,reported_by,status,malfunction_start,planned_start_date,estimated_cost,impact
+NOTIF-000000,EQ-PP-RTG-0001,ELEC,Power Issues,2,2025-04-04 22:03:37.983892,USER-4965,OSNO,2025-04-12 22:03:37.983918,,2610.365119440441,Production Stop
+NOTIF-000001,EQ-PP-QC-0000,MECH,Noise,1,2025-03-24 22:03:37.984122,USER-5673,OSNO,2025-04-12 22:03:37.984138,,1809.150265375125,Quality Impact

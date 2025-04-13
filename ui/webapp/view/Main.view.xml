@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mvc:View
+    controllerName="maintenance.scheduler.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:u="sap.ui.unified">
+    <Page title="Maintenance Scheduler">
+        <content>
+            <VBox alignItems="Center" justifyContent="Center" class="sapUiMediumMargin">
+                <Title text="Current Issues Upload" class="sapUiMediumMarginBottom"/>
+                
+                <HBox alignItems="Center" class="sapUiSmallMarginBottom">
+                    <u:FileUploader
+                        id="fileUploader"
+                        name="file"
+                        uploadUrl="/api/upload_issues"
+                        change="handleFileSelect"
+                        uploadComplete="handleUploadComplete"
+                        useMultipart="true"
+                        sendXHR="true"
+                        sameFilenameAllowed="true"
+                        style="Emphasized"
+                        fileType="csv"
+                        placeholder="Choose CSV file">
+                    </u:FileUploader>
+                    <Button
+                        text="Upload"
+                        press="handleUploadPress"
+                        type="Emphasized"
+                        class="sapUiSmallMarginBegin"/>
+                </HBox>
+
+                <Link
+                    text="Download Template"
+                    press="handleTemplateDownload"
+                    class="sapUiSmallMarginBottom"/>
+
+                <Panel
+                    headerText="Generated Schedule"
+                    expandable="true"
+                    expanded="true"
+                    class="sapUiMediumMarginTop">
+                    <Table
+                        id="scheduleTable"
+                        items="{/scheduleData}"
+                        visible="false">
+                        <columns>
+                            <Column>
+                                <Text text="Equipment ID"/>
+                            </Column>
+                            <Column>
+                                <Text text="Suggested Date"/>
+                            </Column>
+                            <Column>
+                                <Text text="Priority"/>
+                            </Column>
+                            <Column>
+                                <Text text="Type"/>
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{equipment_id}"/>
+                                    <Text text="{suggested_date}"/>
+                                    <Text text="{priority}"/>
+                                    <Text text="{maintenance_type}"/>
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                    
+                    <Button
+                        text="Download Schedule"
+                        press="handleScheduleDownload"
+                        type="Emphasized"
+                        enabled="{= ${/scheduleData}.length > 0}"
+                        class="sapUiSmallMarginTop"/>
+                </Panel>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

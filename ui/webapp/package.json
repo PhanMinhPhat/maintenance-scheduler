@@ -1,0 +1,28 @@
+{
+  "name": "webapp",
+  "version": "1.0.0",
+  "main": "Component.js",
+  "scripts": {
+    "build": "ui5 build --clean-dest",
+    "start": "ui5 serve",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@ui5/builder": "^2.11.11",
+    "@ui5/cli": "^2.14.17",
+    "ui5-middleware-simpleproxy": "^0.6.1"
+  },
+  "dependencies": {
+    "@ui5/fs": "^2.0.6",
+    "@ui5/project": "^2.6.0"
+  },
+  "ui5": {
+    "dependencies": [
+      "ui5-middleware-simpleproxy"
+    ]
+  }
+}

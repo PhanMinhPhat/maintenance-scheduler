@@ -1,0 +1,49 @@
+Issue Types:
+
+MECH - Mechanical issues (Vibration, Noise, Misalignment, Wear)
+ELEC - Electrical issues (Power Issues, Control Failure, Sensor Error)
+HYDR - Hydraulic issues (Leakage, Pressure Loss, Flow Issues)
+PERF - Performance issues (Low Efficiency, Quality Issues, Speed Variation)
+Priority levels: 1 (Highest) to 4 (Lowest)
+
+Impact types:
+
+Production Stop
+Quality Impact
+Performance Degradation
+Safety Risk
+Let me create a comprehensive test file that covers all these scenarios:
+
+current_issues.csv+7-2
+I've created a comprehensive test file that covers all possible scenarios. Here's what the test cases cover:
+
+All Equipment Types:
+RTG (Rubber Tired Gantry)
+QC (Quay Crane)
+FLC (Floor Conveyor)
+TT (Terminal Tractor)
+RS (Reach Stacker)
+All Issue Types:
+MECH (Mechanical) - Vibration, Misalignment
+ELEC (Electrical) - Control Failure, Sensor Error
+HYDR (Hydraulic) - Leakage, Flow Issues
+PERF (Performance) - Speed Variation, Low Efficiency
+All Priority Levels:
+Priority 1 (Highest) - Critical issues requiring immediate attention (Control Failure, Leakage, Flow Issues)
+Priority 2 (High) - Serious issues (Vibration, Sensor Error)
+Priority 3 (Medium) - Moderate issues (Speed Variation, Low Efficiency)
+Priority 4 (Low) - Minor issues (Misalignment)
+All Impact Types:
+Production Stop (highest severity)
+Safety Risk
+Quality Impact
+Performance Degradation
+The test cases are designed to test how the maintenance scheduler handles different combinations of priorities and impacts across different equipment types. The planned start dates are staggered to test scheduling logic:
+
+Immediate (next day) for Priority 1 issues
+2-3 days for Priority 2 issues
+1-2 weeks for Priority 3 issues
+2+ weeks for Priority 4 issues
+Cost estimates range from 1500 to 5000 to test budget-based decision making.
+
+This combination of test cases should provide good coverage for testing the maintenance scheduling algorithm's ability to prioritize and schedule maintenance activities appropriately.
