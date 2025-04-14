@@ -6,23 +6,43 @@ from datetime import datetime, timedelta
 import os
 import numpy as np
 import logging
+from dotenv import load_dotenv
+from sqlalchemy import create_engine
 
 from models.maintenance_env import MaintenanceEnv
 from models.dqn_agent import MaintenanceAgent
 from utils.data_generator import MaintenanceDataGenerator
+
+# Load environment variables
+load_dotenv()
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": ["http://localhost:8081", "http://localhost:8083", "http://localhost:5000"]}})
+CORS(app, resources={r"/api/*": {"origins": [os.environ.get('CORS_ORIGINS', 'http://localhost:8081'), os.environ.get('FRONTEND_URL', 'https://maintenance-scheduler-ui.azurestaticapps.net')]}})
+
+# Database configuration
+DATABASE_URL = os.environ.get('DATABASE_URL')
+if DATABASE_URL and DATABASE_URL.startswith('postgres://'):
+    DATABASE_URL = DATABASE_URL.replace('postgres://', 'postgresql://', 1)
+
+def get_db():
+    if DATABASE_URL:
+        return create_engine(DATABASE_URL)
+    return None
 
 # Initialize the model and agent
 def load_model():
-    # Load sample data for state space initialization
-    data_gen = MaintenanceDataGenerator(num_machines=1)
-    equipment_df, history_df, issues_df = data_gen.generate_all_data()
+    db = get_db()
+    if db is not None:
+        equipment_df = pd.read_sql('SELECT * FROM equipment', db)
+        history_df = pd.read_sql('SELECT * FROM maintenance_history', db)
+        issues_df = pd.read_sql('SELECT * FROM current_issues', db)
+    else:
+        data_gen = MaintenanceDataGenerator(num_machines=1)
+        equipment_df, history_df, issues_df = data_gen.generate_all_data()
     
     # Initialize environment
     env = MaintenanceEnv(equipment_df, history_df, issues_df)
@@ -34,6 +54,17 @@ def load_model():
     agent.load('models/saved/maintenance_dqn_best.pth')
     
     return env, agent
+
+# Initialize database
+def init_db():
+    db = get_db()
+    if db is not None:
+        data_gen = MaintenanceDataGenerator(num_machines=1)
+        equipment_df, history_df, issues_df = data_gen.generate_all_data()
+        
+        equipment_df.to_sql('equipment', db, if_exists='replace', index=False)
+        history_df.to_sql('maintenance_history', db, if_exists='replace', index=False)
+        issues_df.to_sql('current_issues', db, if_exists='replace', index=False)
 
 # Serve UI5 static files
 @app.route('/')
@@ -274,5 +305,11 @@ def download_schedule():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/api/health')
+def health_check():
+    return jsonify({"status": "healthy", "environment": os.environ.get('FLASK_ENV', 'development')})
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    if os.environ.get('FLASK_ENV') == 'production':
+        init_db()
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))

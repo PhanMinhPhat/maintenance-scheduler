@@ -13,6 +13,7 @@ An AI-powered maintenance planning system that uses Deep Q-Learning to optimize 
 7. [Key Features](#key-features)
 8. [Usage Guide](#usage-guide)
 9. [API Reference](#api-reference)
+10. [Deployment Instructions](#deployment-instructions)
 
 ## System Overview
 
@@ -294,3 +295,59 @@ Download generated maintenance schedule
 
 - Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
 - File: maintenance_schedule.xlsx
+
+## Deployment Instructions
+
+### Backend Deployment (PythonAnywhere)
+
+1. Create an account on PythonAnywhere (https://www.pythonanywhere.com)
+2. Go to the Web tab and create a new web app
+3. Choose Manual Configuration and Python 3.9
+4. In the Code section:
+   - Upload all project files
+   - Set the working directory to your project root
+   - Set the WSGI configuration file path to wsgi.py
+   - Set up a virtual environment and install requirements:
+     ```
+     mkvirtualenv maintenance-env --python=/usr/bin/python3.9
+     pip install -r requirements.txt
+     ```
+5. Set up environment variables in the web app configuration:
+   - FLASK_ENV=production
+   - DATABASE_URL=(your database URL)
+   - CORS_ORIGINS=https://[your-github-username].github.io
+
+### Frontend Deployment (GitHub Pages)
+
+1. Create a new GitHub repository
+2. Push your code to the repository:
+   ```
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git remote add origin https://github.com/[your-username]/maintenance-scheduler.git
+   git push -u origin main
+   ```
+3. Enable GitHub Pages:
+   - Go to repository Settings > Pages
+   - Select 'gh-pages' branch and '/root' folder
+   - Save the configuration
+
+The frontend will be available at: https://[your-github-username].github.io/maintenance-scheduler/
+The backend will be available at: https://[your-pythonanywhere-username].pythonanywhere.com/
+
+## Development Setup
+
+1. Clone the repository
+2. Install backend dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+3. Install frontend dependencies:
+   ```
+   cd ui/webapp
+   npm install
+   ```
+4. Start the development servers:
+   - Backend: `python server.py`
+   - Frontend: `cd ui/webapp && ui5 serve`

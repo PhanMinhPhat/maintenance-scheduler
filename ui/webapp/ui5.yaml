@@ -20,4 +20,4 @@ server:
       afterMiddleware: compression
       mountPath: /api
       configuration:
-        baseUri: "http://localhost:5000/api"
+        baseUri: "${API_URL}/api" # Will be replaced during build

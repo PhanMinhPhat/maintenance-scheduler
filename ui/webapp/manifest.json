@@ -6,6 +6,12 @@
     "title": "Maintenance Scheduler",
     "applicationVersion": {
       "version": "1.0.0"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "https://maintenance-scheduler.pythonanywhere.com/api/",
+        "type": "REST"
+      }
     }
   },
   "sap.ui": {
@@ -42,6 +48,9 @@
         "settings": {
           "bundleName": "maintenance.scheduler.i18n.i18n"
         }
+      },
+      "": {
+        "type": "sap.ui.model.json.JSONModel"
       }
     },
     "routing": {

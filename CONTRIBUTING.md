@@ -48,23 +48,27 @@ We use GitHub issues to track public bugs. Report a bug by [opening a new issue]
 ## Development Setup
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/PhanMinhPhat/maintenance-scheduler.git
 cd maintenance-scheduler
 ```
 
 2. Install Python dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
 
 3. Install UI dependencies:
+
 ```bash
 cd ui/webapp
 npm install
 ```
 
 4. Start the development servers:
+
 - Backend: `python server.py`
 - Frontend: `cd ui/webapp && ui5 serve`
 
